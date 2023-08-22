@@ -1,61 +1,31 @@
-<h1><i class="fa fa-envelope-o"></i> Emailer (Mailjet)</h1>
+<div class="acp-page-container">
+	<!-- IMPORT admin/partials/settings/header.tpl -->
 
-<div class="row">
-	<div class="col-lg-12">
-		<p>
-			To get started:
-		</p>
-		<ol>
-			<li>
-				Register for an account on <a href="https://app.mailjet.com/signup" target="_blank">https://app.mailjet.com/signup</a>. Mailjet offers a free tier with up to 6,000 free emails monthly.
-			</li>
-			<li>
-				Paste your API key and SECRET key into the fields below, hit save, and restart your NodeBB
-			</li>
-		</ol>
-	</div>
-</div>
+	<div class="row m-0">
+		<div id="spy-container" class="col-12 col-md-8 px-0 mb-4" tabindex="0">
+			<form role="form" class="quickstart-settings">
+				<div class="mb-4">
+					<!--<h5 class="fw-bold tracking-tight settings-header">General</h5>-->
 
-<hr />
-
-<form role="form" class="emailer-settings">
-	<fieldset>
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="form-group">
-					<label for="apiKey">API KEY</label>
-					<input type="text" class="form-control" id="apiKey" name="apiKey" />
+					<p class="lead">To get started:</p>
+					<p>
+						Register for an account on <a href="https://app.mailjet.com/signup" target="_blank">https://app.mailjet.com/signup</a>. Mailjet offers a free tier with up to 6,000 free emails monthly.
+					</p>
+					<p>
+						Paste your API key and SECRET key into the fields below, hit save, and restart your NodeBB
+					</p>
+					<div class="mb-3">
+						<label class="form-label" for="apiKey">API Key</label>
+						<input type="text" id="apiKey" name="apiKey" title="API Key" class="form-control" placeholder="API Key">
+					</div>
+					<div class="mb-3">
+						<label class="form-label" for="secretKey">Secret Key</label>
+						<input type="text" id="secretKey" name="secretKey" title="Secret Key" class="form-control" placeholder="Secret Key">
+					</div>
 				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="form-group">
-					<label for="secretKey">SECRET KEY</label>
-					<input type="text" class="form-control" id="secretKey" name="secretKey" />
-				</div>
-			</div>
+			</form>
 		</div>
 
-		<button class="btn btn-lg btn-primary" id="save" type="button">Save</button>
-	</fieldset>
-</form>
-
-<script type="text/javascript">
-	require(['settings'], function(Settings) {
-		Settings.load('mailjet', $('.emailer-settings'));
-	
-		$('#save').on('click', function() {
-			Settings.save('mailjet', $('.emailer-settings'), function() {
-				app.alert({
-					type: 'success',
-					alert_id: 'mailjet-saved',
-					title: 'Settings Saved',
-					message: 'Click here to reload NodeBB',
-					timeout: 2500,
-					clickfn: function() {
-						socket.emit('admin.reload');
-					}
-				});
-			});
-		});
-	});
-</script>
+		<!-- IMPORT admin/partials/settings/toc.tpl -->
+	</div>
+</div>

@@ -7,7 +7,9 @@ var server;
 
 Emailer.init = function(params, callback) {
 	function render(req, res, next) {
-		res.render('admin/plugins/emailer-mailjet', {});
+		res.render('admin/plugins/emailer-mailjet', {
+			title: 'Emailer (Mailjet)',
+		});
 	}
 
 	Meta.settings.get('mailjet', function(err, settings) {
