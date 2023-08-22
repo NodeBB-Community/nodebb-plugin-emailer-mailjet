@@ -1,11 +1,11 @@
 {
-    "name": "nodebb-plugin-emailer-mailjet",
+    "name": "@NodeBB-Community/nodebb-plugin-emailer-mailjet",
     "version": "1.1.0",
     "description": "An emailer plugin for NodeBB using Mailjet as a third party service",
     "main": "index.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/pichalite/nodebb-plugin-emailer-mailjet"
+        "url": "https://github.com/NodeBB-Community/nodebb-plugin-emailer-mailjet"
     },
     "keywords": [
         "nodebb",
@@ -16,9 +16,9 @@
     "author": "Pichalite <pichalite.com@gmail.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/pichalite/nodebb-plugin-emailer-mailjet/issues"
+        "url": "https://github.com/NodeBB-Community/nodebb-plugin-emailer-mailjet/issues"
     },
-    "homepage": "https://github.com/pichalite/nodebb-plugin-emailer-mailjet",
+    "homepage": "https://github.com/NodeBB-Community/nodebb-plugin-emailer-mailjet",
     "dependencies": {
         "node-mailjet": "~1.1.0"
     },
