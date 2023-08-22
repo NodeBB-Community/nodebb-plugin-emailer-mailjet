@@ -1,5 +1,5 @@
 {
-    "name": "@NodeBB-Community/nodebb-plugin-emailer-mailjet",
+    "name": "@nodebb-community/nodebb-plugin-emailer-mailjet",
     "version": "2.0.0",
     "description": "An emailer plugin for NodeBB using Mailjet as a third party service",
     "main": "index.js",
