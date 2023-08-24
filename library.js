@@ -1,39 +1,38 @@
-var winston = require.main.require('winston');
-var Meta = require.main.require('./src/meta');
+const winston = require.main.require('winston');
+const Meta = require.main.require('./src/meta');
 
-var Emailer = module.exports;
-var Mailjet = require('node-mailjet');
-var server;
+const Emailer = module.exports;
+const { Client } = require('node-mailjet');
+let mailJet;
 
-Emailer.init = function(params, callback) {
+Emailer.init = async function (params) {
 	function render(req, res, next) {
 		res.render('admin/plugins/emailer-mailjet', {
 			title: 'Emailer (Mailjet)',
 		});
 	}
 
-	Meta.settings.get('mailjet', function(err, settings) {
-		if (!err && settings && settings.apiKey && settings.secretKey) {
-			server = Mailjet.apiConnect(settings.apiKey, settings.secretKey);
-		} else {
-			winston.error('[plugins/emailer-mailjet] API key or SECRET Key not set!');
-		}
-	});
+	const settings = await Meta.settings.get('mailjet');
+	if (settings && settings.apiKey && settings.secretKey) {
+		mailJet = new Client({
+			apiKey: settings.apiKey,
+			apiSecret: settings.secretKey
+		});
+	} else {
+		winston.error('[plugins/emailer-mailjet] API key or SECRET Key not set!');
+	}
 
 	params.router.get('/admin/plugins/emailer-mailjet', params.middleware.admin.buildHeader, render);
 	params.router.get('/api/admin/plugins/emailer-mailjet', render);
-
-	callback();
 };
 
-Emailer.send = function(data, callback) {
-	if (!server) {
+Emailer.send = async function (data) {
+	if (!mailJet) {
 		winston.error('[emailer.mailjet] Mailjet is not set up properly!')
-		return callback(null, data);
+		return data;
 	}
 
-	var sendEmail = server.post('send', { version: 'v3.1' });
-	var emailData = {
+	const emailData = {
 		Messages: [
 			{
 				From: {
@@ -52,14 +51,9 @@ Emailer.send = function(data, callback) {
 		]
 	};
 
-	sendEmail
-		.request(emailData)
-		.then(() => {
-			callback(null, data);
-		})
-		.catch((err) => {
-			callback(err);
-		});
+	await mailJet.post('send', { version: 'v3.1' })
+		.request(emailData);
+	return data;
 };
 
 Emailer.admin = {
