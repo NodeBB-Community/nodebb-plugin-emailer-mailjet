@@ -7,9 +7,9 @@ export function init() {
 };
 
 function handleSettingsForm() {
-	load('quickstart', $('.quickstart-settings'));
+	load('mailjet', $('.mailjet-settings'));
 
 	$('#save').on('click', () => {
-		save('quickstart', $('.quickstart-settings'));
+		save('mailjet', $('.mailjet-settings'));
 	});
 }

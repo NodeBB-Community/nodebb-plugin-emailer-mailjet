@@ -3,7 +3,7 @@
 
 	<div class="row m-0">
 		<div id="spy-container" class="col-12 col-md-8 px-0 mb-4" tabindex="0">
-			<form role="form" class="quickstart-settings">
+			<form role="form" class="mailjet-settings">
 				<div class="mb-4">
 					<!--<h5 class="fw-bold tracking-tight settings-header">General</h5>-->
 
