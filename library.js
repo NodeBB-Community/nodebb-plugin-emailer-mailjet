@@ -1,7 +1,7 @@
 var winston = require.main.require('winston');
 var Meta = require.main.require('./src/meta');
 
-var Emailer = {};
+var Emailer = module.exports;
 var Mailjet = require('node-mailjet');
 var server;
 
@@ -14,7 +14,7 @@ Emailer.init = function(params, callback) {
 
 	Meta.settings.get('mailjet', function(err, settings) {
 		if (!err && settings && settings.apiKey && settings.secretKey) {
-			server = Mailjet.connect(settings.apiKey, settings.secretKey);
+			server = Mailjet.apiConnect(settings.apiKey, settings.secretKey);
 		} else {
 			winston.error('[plugins/emailer-mailjet] API key or SECRET Key not set!');
 		}
@@ -32,30 +32,34 @@ Emailer.send = function(data, callback) {
 		return callback(null, data);
 	}
 
-	var sendEmail = server.post('send');
+	var sendEmail = server.post('send', { version: 'v3.1' });
 	var emailData = {
-		'FromEmail': data.from,
-		'FromName': data.from_name,
-		'Subject': data.subject,
-		'Text-part': data.plaintext,
-		'Html-part': data.html,
-		'Recipients': [{
-			'Email': data.to
-		}]
+		Messages: [
+			{
+				From: {
+					Email: data.from,
+					Name: data.from_name,
+				},
+				To: [
+					{
+						Email: data.to,
+					}
+				],
+				'Subject': data.subject,
+				TextPart: data.plaintext,
+				HTMLPart: data.html,
+			}
+		]
 	};
 
 	sendEmail
 		.request(emailData)
-		.on('success', handleSuccess)
-		.on('error', handleError);
-
-	function handleSuccess(data) {
-		callback(null, data);
-	}
-
-	function handleError(err) {
-		callback(err);
-	}
+		.then(() => {
+			callback(null, data);
+		})
+		.catch((err) => {
+			callback(err);
+		});
 };
 
 Emailer.admin = {
@@ -69,5 +73,3 @@ Emailer.admin = {
 		callback(null, custom_header);
 	}
 };
-
-module.exports = Emailer;
