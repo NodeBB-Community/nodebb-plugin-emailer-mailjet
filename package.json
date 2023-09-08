@@ -2,7 +2,7 @@
     "name": "@nodebb-community/nodebb-plugin-emailer-mailjet",
     "version": "3.0.1",
     "description": "An emailer plugin for NodeBB using Mailjet as a third party service",
-    "main": "index.js",
+    "main": "library.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/NodeBB-Community/nodebb-plugin-emailer-mailjet"
